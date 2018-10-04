@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,6 +37,14 @@ public class TestController {
 
         map.put("name","luocai");
         map.put("wife","xpp");
-        return "test";
+
+        List<Object> goodList = new ArrayList<>();
+        goodList.add("苹果");
+        goodList.add("香蕉");
+        goodList.add("芒果");
+
+        map.put("goodList",goodList);
+
+        return "for";
     }
 }
