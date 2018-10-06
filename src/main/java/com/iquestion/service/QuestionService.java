@@ -14,7 +14,7 @@ public interface QuestionService {
 
     Question queryById(Integer id);
 
-    List<Question> queryLatestQuestions(String userId, Integer offset, Integer limit);
+    List<Question> queryLatestQuestions(Integer userId, Integer offset, Integer limit);
 
     List<Question> queryAll();
 }

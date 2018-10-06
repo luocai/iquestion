@@ -31,7 +31,8 @@ public interface QuestionMapper {
 
     int updateByPrimaryKey(Question record);
 
-    List<Question> selectLatestQuestions(@Param("userId") String userId,
+    List<Question> selectLatestQuestions(@Param("userId") Integer userId,
                                          @Param("offset") Integer offset,
                                          @Param("limit") Integer limit);
+
 }

@@ -1,40 +1,50 @@
 package com.iquestion.controller;
 
-
-import com.iquestion.common.ViewObject;
-import com.iquestion.pojo.Question;
-import com.iquestion.service.QuestionService;
+import com.iquestion.common.Constant;
+import com.iquestion.common.Result;
+import com.iquestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    QuestionService questionService;
+    private UserService userService;
 
-    @RequestMapping(path={"/","/index"})
-    public String index(Model model){
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
 
-        List<Question> questions = questionService.queryAll();
+        return "login";
 
-        List<ViewObject> vos = new ArrayList<>();
+    }
 
-        for(Question question:questions){
-            ViewObject vo = new ViewObject();
-            vo.setData("question",question);
-            vo.setData("userId",question.getUserId());
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public String login(String username, String password){
 
-            vos.add(vo);
+        return "login";
+
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public String register(Model model,
+                           @RequestParam("username") String username,
+                           @RequestParam("password") String password){
+System.out.println("进来登录了啊啦理发 啊");
+        Result result = userService.register(username,password);
+
+        if(result.getresultCode().equals(Constant.RESULT_CODE_SERVER_ERROR)){
+
+            model.addAttribute("result",result);
+            return "relogin";
+
         }
-System.out.println("ceshiceshi");
-        model.addAttribute("vos",vos);
 
-        return "index";
+        return "login";
+
     }
 }

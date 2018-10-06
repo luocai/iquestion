@@ -35,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<Question> queryLatestQuestions(String userId, Integer offset, Integer limit) {
+    public List<Question> queryLatestQuestions(Integer userId, Integer offset, Integer limit) {
         return questionMapper.selectLatestQuestions(userId,offset,limit);
     }
 

@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class ViewObject {
 
-    Map<String , Object> map = new HashMap<>();
+    private Map<String , Object> data = new HashMap<>();
 
-    public void setData(String key, Object object){
-        map.put(key,object);
+    public void set(String key, Object object){
+        data.put(key,object);
     }
 
-    public Object getData(String key){
-        return map.get(key);
+    public Object get(String key){
+        return data.get(key);
     }
 }

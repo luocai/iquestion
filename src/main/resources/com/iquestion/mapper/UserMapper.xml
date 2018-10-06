@@ -148,6 +148,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByName" resultType="com.iquestion.pojo.User">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM USER
+    <if test="name != null">
+      WHERE name = #{name}
+    </if>
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     update user
     <set>

@@ -157,17 +157,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-    <select id="selectLatestQuestions" resultType="com.iquestion.pojo.Question">
-      SELECT
-      <include refid="Base_Column_List"/>
-      FROM question
-      <if test="userId != 0">
-        WHERE userId = #{userId}
-      </if>
-      order by id DESC
-      limit #{offset},#{limit}
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
+  <select id="selectLatestQuestions" resultType="com.iquestion.pojo.Question">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM question
+    <if test="userId != 0">
+      WHERE user_id = #{userId}
+    </if>
+    order by id DESC
+    limit #{offset},#{limit}
+  </select>
+
+  <update id="updateByExampleSelective" parameterType="map">
     update question
     <set>
       <if test="record.id != null">

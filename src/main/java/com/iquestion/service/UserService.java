@@ -1,5 +1,6 @@
 package com.iquestion.service;
 
+import com.iquestion.common.Result;
 import com.iquestion.pojo.User;
 
 public interface UserService {
@@ -14,4 +15,7 @@ public interface UserService {
 
     User queryByName(String userName);
 
+    Result register(String name, String password);
+
+    Result login(String name, String password);
 }
