@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"
-      class="is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile">
+      class="is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,13 +19,15 @@
             <h1 class="logo hide-text"><img src="../images/res/nk.png" alt=""></h1>
             <h2 class="subtitle">
 
+                <span th:if="${result.resultCode == '500'}" >fefe</span>
+
                 与世界分享你的知识、经验和见解
 
             </h2>
         </div>
         <div class="desk-front sign-flow clearfix sign-flow-simple">
             <div class="view view-signin" data-za-module="SignInForm" style="display: block;">
-                <form action="/reg/" id="regloginform" method="post">
+                <form action="/register" id="regloginform" method="post">
                     <input type="hidden" name="_xsrf" value="21aa1c8d254df2899b23ab9afbd62a53">
                     <div class="group-inputs">
                         <div class="email input-wrapper">
@@ -38,7 +40,7 @@
                     <input type="hidden" name="next" value="$!{next}"/>
                     <div class="button-wrapper command clearfix">
                         <button class="sign-button submit" type="submit" onclick="form=document.getElementById('regloginform');form.action='/login/'">登录</button>
-                        <button class="sign-button submit" type="submit" onclick="form=document.getElementById('regloginform');form.action='/reg/'">注册</button>
+                        <button class="sign-button submit" type="submit" onclick="form=document.getElementById('regloginform');form.action='/register/'">注册</button>
                     </div>
                     <div class="signin-misc-wrapper clearfix">
                         <label class="remember-me">

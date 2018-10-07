@@ -29,9 +29,12 @@ public class IquestionApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		List<Question> questions = questionMapper.selectLatestQuestions(1,0,4);
-
-		System.out.println(questions.size());
+		User user = userMapper.selectByName("caicai");
+		if(user != null){
+			System.out.println("nice");
+		}else{
+			System.out.println(user.getName());
+		}
 
 		System.out.println("hehhe");
 	}

@@ -88,10 +88,12 @@ public class UserServiceImpl implements UserService{
     public Result login(String name, String password) {
 
         User user = userMapper.selectByName(name);
-
+System.out.println("这一步已经完成");
         if(user == null){
             return new Result(Constant.RESULT_CODE_SERVER_ERROR,"用户名不存在");
         }
+
+
 
         if(!user.getPassword().equals(Md5Util.MD5(password + user.getSalt()))){
             return new Result(Constant.RESULT_CODE_SERVER_ERROR,"密码错误");

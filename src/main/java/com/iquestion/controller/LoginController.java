@@ -24,9 +24,19 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(String username, String password){
+    public String login(Model model,
+                        @RequestParam("username") String username,
+                        @RequestParam("password") String password){
+System.out.println("在德林路啦");
+        Result result = userService.login(username,password);
+System.out.println("已经出来拉埃");
+        if(result.getresultCode().equals(Constant.RESULT_CODE_SERVER_ERROR)){
 
-        return "login";
+            model.addAttribute("result",result);
+            return "relogin";
+
+        }
+        return "index";
 
     }
 
@@ -40,7 +50,7 @@ System.out.println("进来登录了啊啦理发 啊");
         if(result.getresultCode().equals(Constant.RESULT_CODE_SERVER_ERROR)){
 
             model.addAttribute("result",result);
-            return "relogin";
+            return "redirect:/login";
 
         }
 
