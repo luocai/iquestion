@@ -2,24 +2,29 @@ package com.iquestion.service.impl;
 
 import com.iquestion.common.Constant;
 import com.iquestion.common.Result;
+import com.iquestion.mapper.LoginTicketMapper;
 import com.iquestion.mapper.UserMapper;
+import com.iquestion.pojo.LoginTicket;
 import com.iquestion.pojo.User;
 import com.iquestion.pojo.UserExample;
 import com.iquestion.service.UserService;
 import com.iquestion.utils.Md5Util;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.spring5.context.SpringContextUtils;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
 
     @Override
     public void add(User user) {
@@ -88,6 +93,14 @@ public class UserServiceImpl implements UserService{
     public Result login(String name, String password) {
 
         User user = userMapper.selectByName(name);
+
+        if(StringUtils.isEmpty(name.trim())){
+            return new Result(Constant.RESULT_CODE_SERVER_ERROR,"用户名不能为空");
+        }
+
+        if(StringUtils.isEmpty(password.trim())){
+            return new Result(Constant.RESULT_CODE_SERVER_ERROR,"密码不能为空");
+        }
 System.out.println("这一步已经完成");
         if(user == null){
             return new Result(Constant.RESULT_CODE_SERVER_ERROR,"用户名不存在");
@@ -98,9 +111,34 @@ System.out.println("这一步已经完成");
         if(!user.getPassword().equals(Md5Util.MD5(password + user.getSalt()))){
             return new Result(Constant.RESULT_CODE_SERVER_ERROR,"密码错误");
         }else{
-            return new Result(Constant.RESULT_CODE_SUCCESS,"登录成功");
+            Map<String,Object> map = new HashMap<>();
+            String ticket = addLoginTicket(user.getId());
+            map.put("ticket",ticket);
+            map.put("userId",user.getId());
+            return new Result(Constant.RESULT_CODE_SUCCESS,map);
         }
 
+
+    }
+
+    @Override
+    public void logout(String ticket) {
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket(ticket);
+        loginTicket.setStatus(1);
+        loginTicketMapper.updateByPrimaryKeySelective(loginTicket);
+    }
+
+    private String addLoginTicket(Integer userId){
+
+        LoginTicket ticket = new LoginTicket();
+        ticket.setUserId(userId);
+        Date date = new Date();
+        date.setTime(date.getTime() + 1000*360*24);
+        ticket.setExpired(date);
+        ticket.setStatus(1);
+        ticket.setTicket(UUID.randomUUID().toString().replaceAll("-",""));
+        loginTicketMapper.insert(ticket);
+        return ticket.getTicket();
 
     }
 }

@@ -19,9 +19,9 @@
             <h1 class="logo hide-text"><img src="../images/res/nk.png" alt=""></h1>
             <h2 class="subtitle">
 
-                <span th:if="${result.resultCode == '500'}" >fefe</span>
-
-                与世界分享你的知识、经验和见解
+               <!-- <span th:if="${result.resultCode == 500}" th:text="${result.message}"></span>-->
+                <span th:if="${result == null}" th:text="与世界分享你的知识、经验和见解"></span>
+                <span th:if="${result != null && result.resultCode == 500}" th:text="${result.message}"></span>
 
             </h2>
         </div>

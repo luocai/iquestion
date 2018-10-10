@@ -2,33 +2,33 @@ package com.iquestion.common;
 
 public class Result<T>{
 
-    private Integer resultCode;
+    private int resultCode;
 
     private String message;
 
     private T data;
 
-    public Result(Integer resultCode, String message) {
+    public Result(int resultCode, String message) {
         this.resultCode = resultCode;
         this.message = message;
     }
 
-    public Result(Integer resultCode, String message, T data) {
+    public Result(int resultCode, String message, T data) {
         this.resultCode = resultCode;
         this.message = message;
         this.data = data;
     }
 
-    public Result(Integer resultCode, T data) {
+    public Result(int resultCode, T data) {
         this.resultCode = resultCode;
         this.data = data;
     }
 
-    public Integer getresultCode() {
+    public int getResultCode() {
         return resultCode;
     }
 
-    public void setresultCode(Integer resultCode) {
+    public void setResultCode(int resultCode) {
         this.resultCode = resultCode;
     }
 

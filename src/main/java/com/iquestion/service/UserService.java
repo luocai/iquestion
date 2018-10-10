@@ -18,4 +18,6 @@ public interface UserService {
     Result register(String name, String password);
 
     Result login(String name, String password);
+
+    void logout(String ticket);
 }
