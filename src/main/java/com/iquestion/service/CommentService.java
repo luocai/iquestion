@@ -8,7 +8,7 @@ public interface CommentService {
 
     void add(Comment comment);
 
-    void delete(Comment comment);
+    void delete(Integer commentId);
 
     void update(Comment comment);
 
@@ -16,6 +16,8 @@ public interface CommentService {
 
     Comment queryById(Integer id);
 
-    List<Comment> queryByUserId(Integer userId);
+    List<Comment> queryByEntity(Integer entityId, Integer entityType);
+
+    public int getUserCommentCount(int userId);
 
 }

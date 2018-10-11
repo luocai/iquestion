@@ -1,11 +1,13 @@
 package com.iquestion.service.impl;
 
+import com.iquestion.common.Constant;
 import com.iquestion.mapper.CommentMapper;
 import com.iquestion.pojo.Comment;
 import com.iquestion.pojo.CommentExample;
 import com.iquestion.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -17,12 +19,13 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void add(Comment comment) {
+
         commentMapper.insert(comment);
     }
 
     @Override
-    public void delete(Comment comment) {
-        commentMapper.deleteByPrimaryKey(comment.getId());
+    public void delete(Integer commentId) {
+        commentMapper.deleteByPrimaryKey(commentId);
     }
 
     @Override
@@ -41,11 +44,22 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> queryByUserId(Integer userId) {
+    public List<Comment> queryByEntity(Integer entityId, Integer entityType) {
+        CommentExample commentExample = new CommentExample();
+        CommentExample.Criteria criteria = commentExample.createCriteria();
+
+        criteria.andEntityIdEqualTo(entityId);
+        criteria.andEntityTypeEqualTo(entityType);
+
+        return commentMapper.selectByExampleWithBLOBs(commentExample);
+    }
+
+    public int getUserCommentCount(int userId){
+
         CommentExample commentExample = new CommentExample();
         CommentExample.Criteria criteria = commentExample.createCriteria();
 
         criteria.andUserIdEqualTo(userId);
-        return commentMapper.selectByExample(commentExample);
+        return (int) commentMapper.countByExample(commentExample);
     }
 }

@@ -2,12 +2,10 @@ package com.iquestion.mapper;
 
 import com.iquestion.pojo.Message;
 import com.iquestion.pojo.MessageExample;
-import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
+import java.util.List;
+
 public interface MessageMapper {
     long countByExample(MessageExample example);
 
@@ -36,4 +34,15 @@ public interface MessageMapper {
     int updateByPrimaryKeyWithBLOBs(Message record);
 
     int updateByPrimaryKey(Message record);
+
+    List<com.iquestion.pojo.Message> selectByConversationId(@Param("conversationId") String conversationId,
+                                                            @Param("offset") Integer offset,
+                                                            @Param("limit") Integer limit);
+
+    List<com.iquestion.pojo.Message> selectByUserId(@Param("userId") int userId,
+                                                    @Param("offset") int offset,
+                                                    @Param("limit") int limit);
+
+    int getConversationUnreadCount(@Param("userId") int userId,
+                                   @Param("conversationId") String conversationId);
 }

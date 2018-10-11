@@ -1,4 +1,10 @@
-<div th:replace="header::html" ></div>
+<!DOCTYPE html>
+<!-- saved from url=(0029)#signin -->
+<html lang="zh-CN" dropeffect="none" class="js is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile" style="" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::header"></head>
+<body class="zhi ">
+    <div th:include="common::nav"></div>
+
     <div class="zg-wrap zu-main clearfix " role="main">
         <div class="zu-main-content">
             <div class="zu-main-content-inner">
@@ -18,15 +24,15 @@
                             <meta itemprop="ZReactor" data-id="389034" data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 4168, &quot;comments&quot;: 69, &quot;source&quot;: []}">
                             <div class="feed-item-inner">
                                 <div class="avatar">
-                                    <a title="$!{vo.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">
-                                        <img src="$!{vo.user.headUrl}" class="zm-item-img-avatar"></a>
+                                    <a th:title="${ql.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">
+                                        <img th:src="@{${ql.user.headUrl}}" class="zm-item-img-avatar"></a>
                                 </div>
                                 <div class="feed-main">
                                     <div class="feed-content" data-za-module="AnswerItem">
                                         <meta itemprop="answer-id" content="389034">
                                         <meta itemprop="answer-url-token" content="13174385">
                                         <h2 class="feed-title">
-                                            <a class="question_link" target="_blank" href="/question/$!{vo.question.id}" th:text="${ql.question.title}"></a></h2>
+                                            <a class="question_link" target="_blank" th:href="@{'/question/'+ ${ql.question.id}}" th:text="${ql.question.title}"></a></h2>
                                         <div class="feed-question-detail-item">
                                             <div class="question-description-plain zm-editable-content"></div>
                                         </div>
@@ -71,4 +77,6 @@
             </div>
         </div>
     </div>
-<div th:replace="footer::html" ></div>
+    <div th:include="common::js"></div>
+</body>
+</html>

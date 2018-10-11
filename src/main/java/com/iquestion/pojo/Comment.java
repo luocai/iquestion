@@ -11,7 +11,7 @@ public class Comment {
 
     private Integer entityId;
 
-    private String entityType;
+    private Integer entityType;
 
     private String content;
 
@@ -47,12 +47,12 @@ public class Comment {
         this.entityId = entityId;
     }
 
-    public String getEntityType() {
+    public Integer getEntityType() {
         return entityType;
     }
 
-    public void setEntityType(String entityType) {
-        this.entityType = entityType == null ? null : entityType.trim();
+    public void setEntityType(Integer entityType) {
+        this.entityType = entityType == null ? null : entityType;
     }
 
     public String getContent() {

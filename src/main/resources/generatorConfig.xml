@@ -20,23 +20,23 @@
     </javaTypeResolver>
 
     <!--指定javaBean生成的位置 javaBean生成的位置-->
-    <javaModelGenerator targetPackage="com.iquestion.pojo" targetProject="./src/main/java">
+    <javaModelGenerator targetPackage="com.iquestion.add" targetProject="./src/main/java">
         <property name="enableSubPackages" value="true" />
         <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
     <!--sql映射文件生成的位置-->
-    <sqlMapGenerator targetPackage="com.iquestion.mapper"  targetProject="./src/main/resources">
+    <sqlMapGenerator targetPackage="com.iquestion.add"  targetProject="./src/main/resources">
         <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
     <!--指定dao接口生成的位置-->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.iquestion.mapper"  targetProject="./src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.iquestion.add"  targetProject="./src/main/java">
         <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
     <!--table是指定每个表的生成策略-->
-    <table tableName="login_ticket" domainObjectName="LoginTicket"></table>
+    <table tableName="message" domainObjectName="Message"></table>
     <!--<table tableName="user" domainObjectName="User"></table>-->
     <!--<table tableName="message" domainObjectName="Message"></table>-->
     <!--<table tableName="question" domainObjectName="Question"></table>-->

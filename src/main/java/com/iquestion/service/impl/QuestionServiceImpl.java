@@ -5,6 +5,7 @@ import com.iquestion.pojo.Question;
 import com.iquestion.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public void add(Question question) {
+
+
         questionMapper.insert(question);
     }
 

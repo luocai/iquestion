@@ -91,6 +91,6 @@ System.out.println("进来登录了啊啦理发 啊");
     public String logout(@CookieValue("ticket") String ticket){
 
         userService.logout(ticket);
-        return "index";
+        return "redirect:/index";
     }
 }

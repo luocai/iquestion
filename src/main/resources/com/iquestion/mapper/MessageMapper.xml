@@ -3,10 +3,11 @@
 <mapper namespace="com.iquestion.mapper.MessageMapper">
   <resultMap id="BaseResultMap" type="com.iquestion.pojo.Message">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="fromid" jdbcType="INTEGER" property="fromid" />
-    <result column="toid" jdbcType="INTEGER" property="toid" />
-    <result column="conversation_id" jdbcType="INTEGER" property="conversationId" />
+    <result column="from_id" jdbcType="INTEGER" property="fromId" />
+    <result column="to_id" jdbcType="INTEGER" property="toId" />
+    <result column="conversation_id" jdbcType="VARCHAR" property="conversationId" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="has_read" jdbcType="INTEGER" property="hasRead" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.iquestion.pojo.Message">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, fromid, toid, conversation_id, created_date
+    id, from_id, to_id, conversation_id, created_date, has_read
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -124,12 +125,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.iquestion.pojo.Message">
-    insert into message (id, fromid, toid, 
-      conversation_id, created_date, content
-      )
-    values (#{id,jdbcType=INTEGER}, #{fromid,jdbcType=INTEGER}, #{toid,jdbcType=INTEGER}, 
-      #{conversationId,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
-      )
+    insert into message (id, from_id, to_id, 
+      conversation_id, created_date, has_read, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, 
+      #{conversationId,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{hasRead,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.iquestion.pojo.Message">
     insert into message
@@ -137,17 +138,20 @@
       <if test="id != null">
         id,
       </if>
-      <if test="fromid != null">
-        fromid,
+      <if test="fromId != null">
+        from_id,
       </if>
-      <if test="toid != null">
-        toid,
+      <if test="toId != null">
+        to_id,
       </if>
       <if test="conversationId != null">
         conversation_id,
       </if>
       <if test="createdDate != null">
         created_date,
+      </if>
+      <if test="hasRead != null">
+        has_read,
       </if>
       <if test="content != null">
         content,
@@ -157,23 +161,51 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="fromid != null">
-        #{fromid,jdbcType=INTEGER},
+      <if test="fromId != null">
+        #{fromId,jdbcType=INTEGER},
       </if>
-      <if test="toid != null">
-        #{toid,jdbcType=INTEGER},
+      <if test="toId != null">
+        #{toId,jdbcType=INTEGER},
       </if>
       <if test="conversationId != null">
-        #{conversationId,jdbcType=INTEGER},
+        #{conversationId,jdbcType=VARCHAR},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasRead != null">
+        #{hasRead,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
+  <select id="selectByConversationId" resultType="com.iquestion.pojo.Message">
+    SELECT
+    <include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List"/>
+    FROM message
+    WHERE
+    conversation_id = #{conversationId}
+    limit #{offset},#{limit}
+  </select>
+  <select id="selectByUserId" resultType="com.iquestion.pojo.Message">
+    SELECT
+    <include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List"/>
+    FROM message
+    WHERE
+    from_id = #{userId}
+    limit #{offset},#{limit}
+  </select>
+  <select id="getConversationUnreadCount" resultType="java.lang.Integer">
+    SELECT COUNT(id)
+    FROM message
+    WHERE has_read = 0
+    and form_id = #{userId}
+    and conversation_id=#{conversationId}
+  </select>
   <select id="countByExample" parameterType="com.iquestion.pojo.MessageExample" resultType="java.lang.Long">
     select count(*) from message
     <if test="_parameter != null">
@@ -186,17 +218,20 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.fromid != null">
-        fromid = #{record.fromid,jdbcType=INTEGER},
+      <if test="record.fromId != null">
+        from_id = #{record.fromId,jdbcType=INTEGER},
       </if>
-      <if test="record.toid != null">
-        toid = #{record.toid,jdbcType=INTEGER},
+      <if test="record.toId != null">
+        to_id = #{record.toId,jdbcType=INTEGER},
       </if>
       <if test="record.conversationId != null">
-        conversation_id = #{record.conversationId,jdbcType=INTEGER},
+        conversation_id = #{record.conversationId,jdbcType=VARCHAR},
       </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hasRead != null">
+        has_read = #{record.hasRead,jdbcType=INTEGER},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -209,10 +244,11 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update message
     set id = #{record.id,jdbcType=INTEGER},
-      fromid = #{record.fromid,jdbcType=INTEGER},
-      toid = #{record.toid,jdbcType=INTEGER},
-      conversation_id = #{record.conversationId,jdbcType=INTEGER},
+      from_id = #{record.fromId,jdbcType=INTEGER},
+      to_id = #{record.toId,jdbcType=INTEGER},
+      conversation_id = #{record.conversationId,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      has_read = #{record.hasRead,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -221,10 +257,11 @@
   <update id="updateByExample" parameterType="map">
     update message
     set id = #{record.id,jdbcType=INTEGER},
-      fromid = #{record.fromid,jdbcType=INTEGER},
-      toid = #{record.toid,jdbcType=INTEGER},
-      conversation_id = #{record.conversationId,jdbcType=INTEGER},
-      created_date = #{record.createdDate,jdbcType=TIMESTAMP}
+      from_id = #{record.fromId,jdbcType=INTEGER},
+      to_id = #{record.toId,jdbcType=INTEGER},
+      conversation_id = #{record.conversationId,jdbcType=VARCHAR},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      has_read = #{record.hasRead,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -232,17 +269,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.iquestion.pojo.Message">
     update message
     <set>
-      <if test="fromid != null">
-        fromid = #{fromid,jdbcType=INTEGER},
+      <if test="fromId != null">
+        from_id = #{fromId,jdbcType=INTEGER},
       </if>
-      <if test="toid != null">
-        toid = #{toid,jdbcType=INTEGER},
+      <if test="toId != null">
+        to_id = #{toId,jdbcType=INTEGER},
       </if>
       <if test="conversationId != null">
-        conversation_id = #{conversationId,jdbcType=INTEGER},
+        conversation_id = #{conversationId,jdbcType=VARCHAR},
       </if>
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasRead != null">
+        has_read = #{hasRead,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -252,19 +292,21 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.iquestion.pojo.Message">
     update message
-    set fromid = #{fromid,jdbcType=INTEGER},
-      toid = #{toid,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=INTEGER},
+    set from_id = #{fromId,jdbcType=INTEGER},
+      to_id = #{toId,jdbcType=INTEGER},
+      conversation_id = #{conversationId,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
+      has_read = #{hasRead,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.iquestion.pojo.Message">
     update message
-    set fromid = #{fromid,jdbcType=INTEGER},
-      toid = #{toid,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=INTEGER},
-      created_date = #{createdDate,jdbcType=TIMESTAMP}
+    set from_id = #{fromId,jdbcType=INTEGER},
+      to_id = #{toId,jdbcType=INTEGER},
+      conversation_id = #{conversationId,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      has_read = #{hasRead,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

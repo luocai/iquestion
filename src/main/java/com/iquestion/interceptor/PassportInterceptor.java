@@ -47,7 +47,7 @@ public class PassportInterceptor implements HandlerInterceptor {
 System.out.println("没想到把，我竟然能够执行哈哈哈哈哈或或");
         if(ticket != null){
             LoginTicket loginTicket = loginTicketMapper.selectByTicket(ticket);
-            if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus()== 0) {
+            if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus()!= 0) {
                 return true;
             }
 
@@ -63,6 +63,9 @@ System.out.println("没想到把，我竟然能够执行哈哈哈哈哈或或");
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
 
         if(modelAndView != null){
+
+            System.out.println("现在执行的是post方法......");
+            System.out.println(HostHolder.getUser());
             modelAndView.addObject("user",HostHolder.getUser());
         }
     }

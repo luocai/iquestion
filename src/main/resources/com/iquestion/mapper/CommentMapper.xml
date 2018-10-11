@@ -6,7 +6,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="entity_id" jdbcType="INTEGER" property="entityId" />
-    <result column="entity_type" jdbcType="VARCHAR" property="entityType" />
+    <result column="entity_type" jdbcType="INTEGER" property="entityType" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.iquestion.pojo.Comment">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -128,7 +128,7 @@
       entity_id, entity_type, content
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, 
-      #{entityId,jdbcType=INTEGER}, #{entityType,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      #{entityId,jdbcType=INTEGER}, #{entityType,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.iquestion.pojo.Comment">
@@ -167,7 +167,7 @@
         #{entityId,jdbcType=INTEGER},
       </if>
       <if test="entityType != null">
-        #{entityType,jdbcType=VARCHAR},
+        #{entityType,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -196,7 +196,7 @@
         entity_id = #{record.entityId,jdbcType=INTEGER},
       </if>
       <if test="record.entityType != null">
-        entity_type = #{record.entityType,jdbcType=VARCHAR},
+        entity_type = #{record.entityType,jdbcType=INTEGER},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -212,7 +212,7 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       entity_id = #{record.entityId,jdbcType=INTEGER},
-      entity_type = #{record.entityType,jdbcType=VARCHAR},
+      entity_type = #{record.entityType,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -224,7 +224,7 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       entity_id = #{record.entityId,jdbcType=INTEGER},
-      entity_type = #{record.entityType,jdbcType=VARCHAR}
+      entity_type = #{record.entityType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,7 +242,7 @@
         entity_id = #{entityId,jdbcType=INTEGER},
       </if>
       <if test="entityType != null">
-        entity_type = #{entityType,jdbcType=VARCHAR},
+        entity_type = #{entityType,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -255,7 +255,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       entity_id = #{entityId,jdbcType=INTEGER},
-      entity_type = #{entityType,jdbcType=VARCHAR},
+      entity_type = #{entityType,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -264,7 +264,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       entity_id = #{entityId,jdbcType=INTEGER},
-      entity_type = #{entityType,jdbcType=VARCHAR}
+      entity_type = #{entityType,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

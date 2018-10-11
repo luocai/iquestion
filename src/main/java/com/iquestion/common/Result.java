@@ -8,6 +8,10 @@ public class Result<T>{
 
     private T data;
 
+    public Result(int resultCode) {
+        this.resultCode = resultCode;
+    }
+
     public Result(int resultCode, String message) {
         this.resultCode = resultCode;
         this.message = message;

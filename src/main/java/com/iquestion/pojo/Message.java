@@ -5,13 +5,15 @@ import java.util.Date;
 public class Message {
     private Integer id;
 
-    private Integer fromid;
+    private Integer fromId;
 
-    private Integer toid;
+    private Integer toId;
 
-    private Integer conversationId;
+    private String conversationId;
 
     private Date createdDate;
+
+    private Integer hasRead;
 
     private String content;
 
@@ -23,28 +25,28 @@ public class Message {
         this.id = id;
     }
 
-    public Integer getFromid() {
-        return fromid;
+    public Integer getFromId() {
+        return fromId;
     }
 
-    public void setFromid(Integer fromid) {
-        this.fromid = fromid;
+    public void setFromId(Integer fromId) {
+        this.fromId = fromId;
     }
 
-    public Integer getToid() {
-        return toid;
+    public Integer getToId() {
+        return toId;
     }
 
-    public void setToid(Integer toid) {
-        this.toid = toid;
+    public void setToId(Integer toId) {
+        this.toId = toId;
     }
 
-    public Integer getConversationId() {
+    public String getConversationId() {
         return conversationId;
     }
 
-    public void setConversationId(Integer conversationId) {
-        this.conversationId = conversationId;
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId == null ? null : conversationId.trim();
     }
 
     public Date getCreatedDate() {
@@ -53,6 +55,14 @@ public class Message {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Integer getHasRead() {
+        return hasRead;
+    }
+
+    public void setHasRead(Integer hasRead) {
+        this.hasRead = hasRead;
     }
 
     public String getContent() {

@@ -355,7 +355,7 @@ public class CommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andEntityTypeEqualTo(String value) {
+        public Criteria andEntityTypeEqualTo(Integer value) {
             addCriterion("entity_type =", value, "entityType");
             return (Criteria) this;
         }

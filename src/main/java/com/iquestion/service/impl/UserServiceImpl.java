@@ -135,7 +135,7 @@ System.out.println("这一步已经完成");
         Date date = new Date();
         date.setTime(date.getTime() + 1000*360*24);
         ticket.setExpired(date);
-        ticket.setStatus(1);
+        ticket.setStatus(0);
         ticket.setTicket(UUID.randomUUID().toString().replaceAll("-",""));
         loginTicketMapper.insert(ticket);
         return ticket.getTicket();

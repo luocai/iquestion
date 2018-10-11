@@ -1,9 +1,10 @@
-package com.iquestion.service.impl;
+package com.iquestion.utils;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
@@ -14,9 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 //InitializingBean接口为bean提供了初始化方法的方式，它只包括afterPropertiesSet方法，凡是继承该接口的类，在初始化bean的时候会执行该方法。
-public class SensitiveService implements InitializingBean{
+@Component
+public class SensitiveFilterUtil implements InitializingBean{
 
-    private static final Logger logger = LoggerFactory.getLogger(SensitiveService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SensitiveFilterUtil.class);
 
     @Override
     public void afterPropertiesSet(){
@@ -167,7 +169,7 @@ public class SensitiveService implements InitializingBean{
 
     public static void main(String[] args){
 
-        SensitiveService sensitiveService = new SensitiveService();
+        SensitiveFilterUtil sensitiveService = new SensitiveFilterUtil();
         sensitiveService.addSensitiveWord("妈的");
         sensitiveService.addSensitiveWord("吉吉");
 
