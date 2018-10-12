@@ -58,21 +58,32 @@
                      data-init="{&quot;params&quot;: {&quot;url_token&quot;: 36301524, &quot;pagesize&quot;: 10, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}">
 
                     <!--#foreach($comment in $comments)-->
-                    <div class="zm-item-answer  zm-item-expanded js-comment" th:each="comment : ${commentList}">
+                    <div class="zm-item-answer  zm-item-expanded js-comment" th:each="answer : ${answersList}">
                         <link itemprop="url" href="">
                         <meta itemprop="answer-id" content="22162611">
                         <meta itemprop="answer-url-token" content="66862039">
                         <a class="zg-anchor-hidden" name="answer-22162611"></a>
 
-                        <div class="zm-votebar goog-scrollfloater js-vote" data-id="$!{comment.comment.id}">
+                        <div class="zm-votebar goog-scrollfloater js-vote" th:data-id="${answer.comment.id}">
 
-                            <button class="up js-like pressed" title="赞同">
+
+                            <button th:if="${answer.likeStatus > 0}" class="up js-like pressed" title="赞同">
                                 <i class="icon vote-arrow"></i>
-                                <span class="count js-voteCount">$!{comment.likeCount}</span>
+                                <span class="count js-voteCount" th:text="${answer.likeCount}"></span>
+                                <span class="label sr-only">赞同</span>
+                            </button>
+                            <button th:unless="${answer.likeStatus > 0}" class="up js-like" title="赞同">
+
+                                <i class="icon vote-arrow"></i>
+                                <span class="count js-voteCount" th:text="${answer.likeCount}"></span>
                                 <span class="label sr-only">赞同</span>
                             </button>
 
-                            <button class="down js-dislike pressed" title="反对，不会显示你的姓名">
+                            <button th:if="${answer.likeStatus < 0}" class="down js-dislike pressed" title="反对，不会显示你的姓名">
+                                <i class="icon vote-arrow"></i>
+                                <span class="label sr-only">反对，不会显示你的姓名</span>
+                            </button>
+                            <button th:unless="${answer.likeStatus < 0}" class="down js-dislike" title="反对，不会显示你的姓名">
                                 <i class="icon vote-arrow"></i>
                                 <span class="label sr-only">反对，不会显示你的姓名</span>
                             </button>
@@ -81,24 +92,24 @@
                             <div class="zm-item-answer-author-info">
                                 <a class="zm-item-link-avatar avatar-link" href="" target="_blank" data-tip="p$t$yingxiaodao">
                                     <img src="${comment.user.headUrl}" class="zm-list-avatar avatar"></a>
-                                <a class="author-link" data-tip="p$t$yingxiaodao" target="_blank" href="">ping</a>
+                                <a class="author-link" data-tip="p$t$yingxiaodao" target="_blank" href="" th:text="${answer.username}"></a>
                             </div>
                             <div class="zm-item-vote-info">
                                     <span class="voters text">
-                                        <a href="" class="more text"><span class="js-voteCount">100</span>&nbsp;人赞同</a>
+                                        <a href="" class="more text"><span class="js-voteCount" th:text="${answer.likeCount}"></span>&nbsp;人赞同</a>
                                     </span>
                             </div>
                         </div>
                         <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="6727688" data-action="/answer/content" data-author-name="营销岛" data-entry-url="/question/36301524/answer/66862039">
 
 
-                            <div class="zm-editable-content clearfix" th:text="${comment.content}">
+                            <div class="zm-editable-content clearfix" th:text="${answer.comment.content}">
                             </div>
                         </div>
                         <a class="zg-anchor-hidden ac" name="22162611-comment"></a>
                         <div class="zm-item-meta answer-actions clearfix js-contentActions">
                             <div class="zm-meta-panel">
-                                <a itemprop="url" class="answer-data-link meta-item" target="_blank" href="">发布于 <span th:text="${#dates.format(comment.createdDate,'yyyy-MM-dd HH:mm:ss')}"></span></a>
+                                <a itemprop="url" class="answer-data-link meta-item" target="_blank" href="">发布于 <span th:text="${#dates.format(answer.comment.createdDate,'yyyy-MM-dd HH:mm:ss')}"></span></a>
                                 <a href="" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
                                     <i class="z-icon-comment"></i>4 条评论</a>
 
@@ -132,8 +143,14 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/scripts/main/site/detail.js"></script>
     <div th:include="common::js"></div>
+    <script type="text/javascript" src="/scripts/main/site/detail.js"></script>
+
+
+    <script type="text/javascript">
+
+
+    </script>
 </body>
 </html>
 

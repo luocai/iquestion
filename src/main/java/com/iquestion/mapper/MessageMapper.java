@@ -2,10 +2,12 @@ package com.iquestion.mapper;
 
 import com.iquestion.pojo.Message;
 import com.iquestion.pojo.MessageExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface MessageMapper {
     long countByExample(MessageExample example);
 

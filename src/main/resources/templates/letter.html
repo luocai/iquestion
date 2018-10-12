@@ -1,0 +1,48 @@
+<html lang="zh-CN" dropeffect="none" class="js is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile" style="" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::header"></head>
+<body class="zhi ">
+<div th:include="common::nav"></div>
+<link rel="stylesheet" media="all" href="../styles/letter.css">
+    <div id="main">
+        <div class="zg-wrap zu-main clearfix ">
+            <ul class="letter-list">
+
+                <li id="conversation-item-10005_622873" th:each="conversation : ${conversations}">
+                    <a class="letter-link" href="/msg/detail?conversationId=$conversation.message.conversationId"></a>
+                    <div class="letter-info">
+                        <span class="l-time" th:text="${#dates.format(conversation.message.createdDate,'yyyy-MM-dd HH:mm:ss')}></span>
+                        <div class="l-operate-bar">
+                            <!--<a href="javascript:void(0);" class="sns-action-del" data-id="10005_622873">
+                            删除
+                            </a>-->
+                            <a href="/msg/detail?$conversation.message.conversationId">
+                                共$conversation.message.id <span th:text="${conversation.message.id}"></span>条会话
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chat-headbox">
+                        <span class="msg-num" th:text="${conversation.unread}">
+                            <!--$conversation.unread-->
+                        </span>
+                        <a class="list-head">
+                            <img alt="头像" th:src="@{${conversation.user.headUrl}}" src="$conversation.user.headUrl">
+                        </a>
+                    </div>
+                    <div class="letter-detail">
+                        <a title="通知" class="letter-name level-color-1" th:text="${conversation.user.name}">
+
+                        </a>
+                        <p class="letter-brief" th:text="${conversation.message.content}">
+                            $conversation.message.content
+                        </p>
+                    </div>
+                </li>
+
+                </ul>
+
+        </div>
+    </div>
+    <div th:include="common::js"></div>
+    <script type="text/javascript" src="/scripts/main/site/detail.js"></script>
+</body>
+</html>

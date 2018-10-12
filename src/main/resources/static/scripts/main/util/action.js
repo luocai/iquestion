@@ -142,15 +142,15 @@
             dataType: 'json',
             data: oConf.data
         }).done(function (oResult) {
-            var nCode = oResult.code;
-            if (oResult.code === 999) {
+            var nCode = oResult.resultCode;
+            if (oResult.resultCode === 401) {
                 // 未登录
                 alert('未登录');
-                window.location.href = '/reglogin?next=' + window.encodeURI(window.location.href);
+                window.location.href = '/login?next=' + window.encodeURI(window.location.href);
                 return;
             }
-            nCode === 0 && oConf.call && oConf.call(oResult);
-            nCode !== 0 && oConf.error && oConf.error(oResult);
+            nCode === 200 && oConf.call && oConf.call(oResult);
+            nCode !== 200 && oConf.error && oConf.error(oResult);
         }).fail(oConf.error).always(oConf.always);
     }
 

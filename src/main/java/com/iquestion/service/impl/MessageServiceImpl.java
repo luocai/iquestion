@@ -6,9 +6,11 @@ import com.iquestion.pojo.MessageExample;
 import com.iquestion.service.MessageService;
 import com.iquestion.service.SensitiveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MessageServiceImpl implements MessageService {
 
     @Autowired

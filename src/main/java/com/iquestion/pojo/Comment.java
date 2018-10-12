@@ -62,4 +62,16 @@ public class Comment {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", createdDate=" + createdDate +
+                ", entityId=" + entityId +
+                ", entityType=" + entityType +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

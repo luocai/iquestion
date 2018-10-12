@@ -5,9 +5,9 @@ import com.iquestion.common.Result;
 import com.iquestion.pojo.Comment;
 import com.iquestion.pojo.HostHolder;
 import com.iquestion.pojo.Question;
-import com.iquestion.service.CommentService;
-import com.iquestion.service.QuestionService;
-import com.iquestion.service.SensitiveService;
+import com.iquestion.pojo.User;
+import com.iquestion.pojo.pojogroup.Answers;
+import com.iquestion.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class QuestionController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private LikeService likeService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/question",method = RequestMethod.POST)
     @ResponseBody
@@ -79,7 +85,26 @@ System.out.println(content);
 
         List<Comment>  commentList = commentService.queryByEntity(questionId,Constant.QUESTION_TYPE);
         model.addAttribute("question",question);
+        //封装了视图类
+        List<Answers> answersList = new ArrayList<>() ;
+
+        for (Comment comment: commentList){
+
+            Answers answers = new Answers();
+            User user = userService.queryById(comment.getUserId());
+
+            answers.setComment(comment);
+            System.out.println("一共有这么多赞哦" + likeService.getLikeCount(comment.getEntityId(),Constant.QUESTION_TYPE));
+            answers.setLikeCount(likeService.getLikeCount(comment.getEntityId(),Constant.QUESTION_TYPE));
+            answers.setUsername(user.getName());
+            answers.setLikeStatus(likeService.getLikeStatus(comment.getEntityId(),Constant.QUESTION_TYPE,user.getId()));
+
+            answersList.add(answers);
+
+        }
+
         model.addAttribute("commentList",commentList);
+        model.addAttribute("answersList",answersList);
 
         System.out.println("测试下内容");
         for(Comment comment: commentList){
