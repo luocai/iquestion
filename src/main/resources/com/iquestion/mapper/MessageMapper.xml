@@ -203,7 +203,7 @@
     SELECT COUNT(id)
     FROM message
     WHERE has_read = 0
-    and form_id = #{userId}
+    and from_id = #{userId}
     and conversation_id=#{conversationId}
   </select>
   <select id="countByExample" parameterType="com.iquestion.pojo.MessageExample" resultType="java.lang.Long">

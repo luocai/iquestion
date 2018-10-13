@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +49,7 @@ System.out.println("出来啦哈哈");
             message.setFromId(HostHolder.getUser().getId());
             message.setToId(user.getId());
             message.setContent(content);
+            message.setConversationId(conversationIdTransfer(message.getFromId(),message.getToId()));
             messageService.add(message);
             return new Result(Constant.RESULT_CODE_SUCCESS);
 
@@ -61,8 +59,8 @@ System.out.println("出来啦哈哈");
         }
     }
 
-    @RequestMapping(path = {"/msg/detail"}, method = {RequestMethod.GET})
-    public String getConversationDetail(Model model, @RequestParam("conversationId") String conversationId) {
+    @RequestMapping(path = {"/msg/{conversationId}"}, method = {RequestMethod.GET})
+    public String getConversationDetail(Model model, @PathVariable("conversationId") String conversationId) {
         try {
             List<Message> messageList = messageService.getConversationDetail(conversationId, 0, 10);
             List<Messages> messagesList = new ArrayList<Messages>();
@@ -77,7 +75,17 @@ System.out.println("出来啦哈哈");
         } catch (Exception e) {
             logger.error("获取详情失败" + e.getMessage());
         }
-        return "letterDetail";
+        return "letterDetail2";
+    }
+
+    //转化conversationId格式
+    private String conversationIdTransfer(int fromId, int toId){
+
+        if (fromId < toId) {
+            return String.format("%d_%d", fromId, toId);
+        } else {
+            return String.format("%d_%d", toId, fromId);
+        }
     }
 
     @RequestMapping(path = {"/msg"}, method = {RequestMethod.GET})

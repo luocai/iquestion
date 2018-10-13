@@ -8,20 +8,20 @@
             <ul class="letter-list">
 
                 <li id="conversation-item-10005_622873" th:each="conversation : ${conversations}">
-                    <a class="letter-link" href="/msg/detail?conversationId=$conversation.message.conversationId"></a>
+                    <a class="letter-link" th:href="@{'/msg/' + ${conversation.message.conversationId}}"></a>
                     <div class="letter-info">
-                        <span class="l-time" th:text="${#dates.format(conversation.message.createdDate,'yyyy-MM-dd HH:mm:ss')}></span>
+                        <span class="l-time" th:text="${#dates.format(conversation.message.createdDate,'yyyy-MM-dd HH:mm:ss')}"></span>
                         <div class="l-operate-bar">
                             <!--<a href="javascript:void(0);" class="sns-action-del" data-id="10005_622873">
                             删除
                             </a>-->
-                            <a href="/msg/detail?$conversation.message.conversationId">
-                                共$conversation.message.id <span th:text="${conversation.message.id}"></span>条会话
+                            <a th:href="@{'/msg/' + ${conversation.message.conversationId}}">
+                                共 <span th:text="${conversation.message.id}"></span>条会话
                             </a>
                         </div>
                     </div>
                     <div class="chat-headbox">
-                        <span class="msg-num" th:text="${conversation.unread}">
+                        <span class="msg-num" th:text="${conversation.unRead}">
                             <!--$conversation.unread-->
                         </span>
                         <a class="list-head">
