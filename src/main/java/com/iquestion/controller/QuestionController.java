@@ -94,11 +94,12 @@ System.out.println(content);
             User user = userService.queryById(comment.getUserId());
 
             answers.setComment(comment);
-            System.out.println("一共有这么多赞哦" + likeService.getLikeCount(comment.getEntityId(),Constant.QUESTION_TYPE));
-            answers.setLikeCount(likeService.getLikeCount(comment.getEntityId(),Constant.QUESTION_TYPE));
+            System.out.println("一共有这么多赞哦" + likeService.getLikeCount(comment.getId(),Constant.COMMENT_TYPE));
+            answers.setLikeCount(likeService.getLikeCount(comment.getId(),Constant.COMMENT_TYPE));
             answers.setUsername(user.getName());
-            answers.setLikeStatus(likeService.getLikeStatus(comment.getEntityId(),Constant.QUESTION_TYPE,user.getId()));
+            answers.setLikeStatus(likeService.getLikeStatus(comment.getId(),Constant.COMMENT_TYPE,user.getId()));
 
+            System.out.println(answers);
             answersList.add(answers);
 
         }

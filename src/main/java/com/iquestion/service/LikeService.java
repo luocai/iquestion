@@ -19,7 +19,7 @@ public class LikeService {
         jedisAdapter.sadd(likeKey,String.valueOf(userId));
         //反对则减少
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityId,entityType);
-        return jedisAdapter.srem(likeKey,String.valueOf(userId));
+        return jedisAdapter.srem(disLikeKey,String.valueOf(userId));
     }
 
 

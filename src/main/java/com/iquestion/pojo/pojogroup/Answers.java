@@ -40,6 +40,16 @@ public class Answers {
         return likeCount;
     }
 
+    @Override
+    public String toString() {
+        return "Answers{" +
+                "comment=" + comment +
+                ", username='" + username + '\'' +
+                ", likeCount=" + likeCount +
+                ", likeStatus=" + likeStatus +
+                '}';
+    }
+
     public void setLikeCount(Long likeCount) {
         this.likeCount = likeCount;
     }

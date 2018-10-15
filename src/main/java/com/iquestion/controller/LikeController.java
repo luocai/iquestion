@@ -36,7 +36,7 @@ System.out.println("现在已经进了了哦哦哦哦哦哦哦哦");
         Comment comment = commentService.queryById(commentId);
 
         System.out.println(comment);
-        long likeCount = likeService.like(HostHolder.getUser().getId(),comment.getEntityId(), Constant.QUESTION_TYPE);
+        long likeCount = likeService.like(HostHolder.getUser().getId(),comment.getId(), Constant.COMMENT_TYPE);
         System.out.println(likeCount);
         return new Result(Constant.RESULT_CODE_SUCCESS,likeCount);
     }
@@ -50,7 +50,7 @@ System.out.println("现在已经进了了哦哦哦哦哦哦哦哦");
         }
 
         Comment comment = commentService.queryById(commentId);
-        long likeCount = likeService.disLike(HostHolder.getUser().getId(),comment.getEntityId(), Constant.QUESTION_TYPE);
+        long likeCount = likeService.disLike(HostHolder.getUser().getId(),comment.getId(), Constant.COMMENT_TYPE);
 
         return new Result(Constant.RESULT_CODE_SUCCESS,likeCount);
 
