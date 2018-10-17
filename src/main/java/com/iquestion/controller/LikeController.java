@@ -1,5 +1,8 @@
 package com.iquestion.controller;
 
+import com.iquestion.async.EventModel;
+import com.iquestion.async.EventProducer;
+import com.iquestion.async.EventType;
 import com.iquestion.common.Constant;
 import com.iquestion.common.Result;
 import com.iquestion.pojo.Comment;
@@ -22,6 +25,9 @@ public class LikeController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
     @ResponseBody
     public Result like(@RequestParam("commentId") int commentId){
@@ -33,7 +39,16 @@ System.out.println("lllllllllllllllllll啪啪啪");
 
 System.out.println("现在已经进了了哦哦哦哦哦哦哦哦");
 
+
         Comment comment = commentService.queryById(commentId);
+
+        EventModel eventModel = new EventModel();
+        eventModel.setEntityId(commentId);
+        eventModel.setEntityType(Constant.COMMENT_TYPE);
+        eventModel.setType(EventType.LIKE);
+        eventModel.setActorId(comment.getUserId());
+        eventModel.setExt("questionId",String.valueOf(comment.getEntityId()) );
+        eventProducer.fireEvent(eventModel);
 
         System.out.println(comment);
         long likeCount = likeService.like(HostHolder.getUser().getId(),comment.getId(), Constant.COMMENT_TYPE);

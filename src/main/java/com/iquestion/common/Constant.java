@@ -12,5 +12,9 @@ public class Constant {
     public static int COMMENT_TYPE = 1;  //评论类型
 
 
+    public static String BIZ_EVENTQUEUE = "EVENT_QUEUE"; // 事件队列key
+    public static int SYSTEM_USERID = 4; //系统消息 当有人点赞，系统自动发消息通知你
+
+
     public static final int ANONYMOUS_USERID = 3; //未登录用户
 }
