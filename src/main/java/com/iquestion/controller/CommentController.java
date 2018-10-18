@@ -44,7 +44,7 @@ System.out.println("进来了评论区的一批哦");
 
             comment.setCreatedDate(new Date());
             comment.setEntityId(questionId);
-            comment.setEntityType(Constant.QUESTION_TYPE);
+            comment.setEntityType(Constant.ENTITY_QUESTION);
             if(HostHolder.getUser() != null)
                 comment.setUserId(HostHolder.getUser().getId());
             commentService.add(comment);

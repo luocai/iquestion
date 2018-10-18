@@ -8,8 +8,11 @@ public class Constant {
 
     public static final int NEED_LOGIN = 401;
 
-    public static int QUESTION_TYPE = 0; // 问题类型（评论中心需要）
-    public static int COMMENT_TYPE = 1;  //评论类型
+
+
+    public static int ENTITY_QUESTION = 0; // 问题类型（评论中心需要）
+    public static int ENTITY_COMMENT = 1;  //评论类型
+    public static int ENTITY_USER = 2;  //用户类型
 
 
     public static String BIZ_EVENTQUEUE = "EVENT_QUEUE"; // 事件队列key

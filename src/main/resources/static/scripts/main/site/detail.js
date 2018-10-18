@@ -37,13 +37,14 @@
         Action[bLike ? 'like' : 'dislike']({
             commentId: sId,
             call: function (oResult) {
-                alert("hdhfhdhf");
+
                 // 调整样式
                 oDv.find('.pressed').removeClass('pressed');
                 oDv.find(bLike ? '.js-like' : '.js-dislike').addClass('pressed');
                 // 更新数量
+                alert(oResult.data);
                 oDv.closest('div.js-comment').find('span.js-voteCount').html(oResult.data);
-                alert(sId);
+
             },
             error: function (oResult) {
                 console.log(oResult);

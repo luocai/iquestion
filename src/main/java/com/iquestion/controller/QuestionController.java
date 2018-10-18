@@ -38,6 +38,9 @@ public class QuestionController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FollowService followService;
+
     @RequestMapping(value = "/question",method = RequestMethod.POST)
     @ResponseBody
     public Result addQuestion(Model model,
@@ -83,7 +86,7 @@ System.out.println(content);
             System.out.println("该问题不存在");
         }
 
-        List<Comment>  commentList = commentService.queryByEntity(questionId,Constant.QUESTION_TYPE);
+        List<Comment>  commentList = commentService.queryByEntity(questionId,Constant.ENTITY_QUESTION);
         model.addAttribute("question",question);
         //封装了视图类
         List<Answers> answersList = new ArrayList<>() ;
@@ -94,16 +97,33 @@ System.out.println(content);
             User user = userService.queryById(comment.getUserId());
 
             answers.setComment(comment);
-            System.out.println("一共有这么多赞哦" + likeService.getLikeCount(comment.getId(),Constant.COMMENT_TYPE));
-            answers.setLikeCount(likeService.getLikeCount(comment.getId(),Constant.COMMENT_TYPE));
+            answers.setLikeCount(likeService.getLikeCount(comment.getId(),Constant.ENTITY_COMMENT));
             answers.setUsername(user.getName());
-            answers.setLikeStatus(likeService.getLikeStatus(comment.getId(),Constant.COMMENT_TYPE,user.getId()));
+            if(HostHolder.getUser() == null){
+                answers.setLikeStatus(0);
+            }else {
+                answers.setLikeStatus(likeService.getLikeStatus(comment.getId(),Constant.ENTITY_COMMENT,HostHolder.getUser().getId()));
+            }
 
+System.out.println("hahhahahhhah哈哈哈发货单韩非韩非积分.........状态：" + answers.getLikeStatus());
             System.out.println(answers);
             answersList.add(answers);
 
         }
 
+        List<User> followers = new ArrayList<>();
+        List<Integer> users = followService.getFollowers(Constant.ENTITY_QUESTION,questionId,20);
+        for(int userId  : users){
+
+            User user = userService.queryById(userId);
+            if(user != null){
+                followers.add(user);
+            }
+
+        }
+
+        model.addAttribute("follow",followService.isfollower(HostHolder.getUser().getId(),Constant.ENTITY_QUESTION,questionId));
+        model.addAttribute("followers",followers);
         model.addAttribute("commentList",commentList);
         model.addAttribute("answersList",answersList);
 

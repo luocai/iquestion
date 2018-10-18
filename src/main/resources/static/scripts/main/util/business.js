@@ -66,7 +66,7 @@
                     // 文字
                     oEl.html(bFollow ? '关注问题' : '取消关注');
                     // 修改数量
-                    oCountEl.html(oResult.count);
+                    oCountEl.html(oResult.data.count);
                     if (bFollow) {
                         // 移除用户
                         oListEl.find('.js-user-' + oResult.id).remove();

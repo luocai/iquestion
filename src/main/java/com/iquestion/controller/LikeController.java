@@ -44,15 +44,16 @@ System.out.println("现在已经进了了哦哦哦哦哦哦哦哦");
 
         EventModel eventModel = new EventModel();
         eventModel.setEntityId(commentId);
-        eventModel.setEntityType(Constant.COMMENT_TYPE);
+        eventModel.setEntityType(Constant.ENTITY_COMMENT);
         eventModel.setType(EventType.LIKE);
         eventModel.setActorId(comment.getUserId());
         eventModel.setExt("questionId",String.valueOf(comment.getEntityId()) );
         eventProducer.fireEvent(eventModel);
 
         System.out.println(comment);
-        long likeCount = likeService.like(HostHolder.getUser().getId(),comment.getId(), Constant.COMMENT_TYPE);
-        System.out.println(likeCount);
+        long likeCount = likeService.like(HostHolder.getUser().getId(),comment.getId(), Constant.ENTITY_COMMENT);
+
+
         return new Result(Constant.RESULT_CODE_SUCCESS,likeCount);
     }
 
@@ -65,7 +66,7 @@ System.out.println("现在已经进了了哦哦哦哦哦哦哦哦");
         }
 
         Comment comment = commentService.queryById(commentId);
-        long likeCount = likeService.disLike(HostHolder.getUser().getId(),comment.getId(), Constant.COMMENT_TYPE);
+        long likeCount = likeService.disLike(HostHolder.getUser().getId(),comment.getId(), Constant.ENTITY_COMMENT);
 
         return new Result(Constant.RESULT_CODE_SUCCESS,likeCount);
 

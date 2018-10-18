@@ -19,7 +19,9 @@ public class LikeService {
         jedisAdapter.sadd(likeKey,String.valueOf(userId));
         //反对则减少
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityId,entityType);
-        return jedisAdapter.srem(disLikeKey,String.valueOf(userId));
+        jedisAdapter.srem(disLikeKey,String.valueOf(userId));
+
+        return jedisAdapter.scard(likeKey);
     }
 
 
@@ -30,7 +32,9 @@ public class LikeService {
         jedisAdapter.sadd(disLikeKey, String.valueOf(userId));
 
         String likeKey = RedisKeyUtil.getLikeKey(entityId, entityType);
-        return jedisAdapter.srem(likeKey,String.valueOf(userId));
+        jedisAdapter.srem(likeKey,String.valueOf(userId));
+
+        return jedisAdapter.scard(likeKey);
     }
 
     //点赞总量
