@@ -24,7 +24,7 @@
                             <meta itemprop="ZReactor" data-id="389034" data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 4168, &quot;comments&quot;: 69, &quot;source&quot;: []}">
                             <div class="feed-item-inner">
                                 <div class="avatar">
-                                    <a th:title="${ql.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">
+                                    <a th:title="${ql.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" >
                                         <img th:src="@{${ql.user.headUrl}}" class="zm-item-img-avatar"></a>
                                 </div>
                                 <div class="feed-main">
@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="expandable entry-body">
                                             <div class="zm-item-vote">
-                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">4168</a></div>
+                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="" th:text="${ql.followCount}">4168</a></div>
                                             <div class="zm-item-answer-author-info">
                                                 <a class="author-link" data-tip="p$b$amuro1230" target="_blank" th:href="@{'/user/' + ${ql.user.id}}"  th:text="${ql.user.name}"></a>
                                                 ，<span th:text="${#dates.format(ql.question.createdDate,'yyyy-MM-dd HH:mm:ss')}"></span>

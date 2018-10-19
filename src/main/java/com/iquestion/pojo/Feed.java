@@ -1,5 +1,7 @@
 package com.iquestion.pojo;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 
 public class Feed {
@@ -12,6 +14,8 @@ public class Feed {
     private Date createddate;
 
     private String data;
+
+    private JSONObject dataJSON = null;
 
     public Integer getId() {
         return id;
@@ -46,10 +50,13 @@ public class Feed {
     }
 
     public String getData() {
+
         return data;
     }
 
     public void setData(String data) {
+        this.dataJSON = JSONObject.parseObject(data);
+
         this.data = data == null ? null : data.trim();
     }
 }

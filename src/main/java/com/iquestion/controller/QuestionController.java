@@ -9,6 +9,8 @@ import com.iquestion.pojo.User;
 import com.iquestion.pojo.pojogroup.Answers;
 import com.iquestion.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ import java.util.List;
 
 @Controller
 public class QuestionController {
+
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     @Autowired
     private QuestionService questionService;
@@ -48,8 +52,7 @@ public class QuestionController {
                               @RequestParam("content") String content){
 
         Question question = new Question();
-System.out.println(title);
-System.out.println(content);
+
         //格式转换，避免内容为js影响界面显示
         question.setTitle(HtmlUtils.htmlEscape(title));
         question.setContent(HtmlUtils.htmlEscape(content));
@@ -83,7 +86,7 @@ System.out.println(content);
         Question question = questionService.queryById(questionId);
 
         if(question == null){
-            System.out.println("该问题不存在");
+            logger.error("该问题不存在");
         }
 
         List<Comment>  commentList = commentService.queryByEntity(questionId,Constant.ENTITY_QUESTION);
@@ -105,7 +108,6 @@ System.out.println(content);
                 answers.setLikeStatus(likeService.getLikeStatus(comment.getId(),Constant.ENTITY_COMMENT,HostHolder.getUser().getId()));
             }
 
-System.out.println("hahhahahhhah哈哈哈发货单韩非韩非积分.........状态：" + answers.getLikeStatus());
             System.out.println(answers);
             answersList.add(answers);
 
@@ -127,10 +129,6 @@ System.out.println("hahhahahhhah哈哈哈发货单韩非韩非积分.........状
         model.addAttribute("commentList",commentList);
         model.addAttribute("answersList",answersList);
 
-        System.out.println("测试下内容");
-        for(Comment comment: commentList){
-            System.out.println(comment.getContent());
-        }
 
         return "detail";
     }

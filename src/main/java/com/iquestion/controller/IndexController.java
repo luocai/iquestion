@@ -1,9 +1,11 @@
 package com.iquestion.controller;
 
 
+import com.iquestion.common.Constant;
 import com.iquestion.pojo.Question;
 import com.iquestion.pojo.User;
 import com.iquestion.pojo.pojogroup.Questions;
+import com.iquestion.service.FollowService;
 import com.iquestion.service.QuestionService;
 import com.iquestion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FollowService followService;
+
     @RequestMapping(path={"/","/index"})
     public String index(Model model){
 
@@ -39,23 +44,23 @@ public class IndexController {
     @RequestMapping(path={"/user/{userId}"})
     public String userIndex(@PathVariable("userId") Integer userId,Model model){
 
-        System.out.println("..........单独哦 " + userId);
         model.addAttribute("questionsLine",getQuestionsLine(userId,0,10));
 
         return "index";
     }
 
     private List<Questions> getQuestionsLine(Integer userId, Integer offset, Integer limit){
-System.out.println("得到掉过的");
+
         List<Question> questionList = questionService.queryLatestQuestions(userId,offset,limit);
         List<Questions> questionsLine = new ArrayList<>();
-System.out.println("hhachualila");
+
         for(Question question : questionList){
             Questions questions = new Questions();
             User user = userService.queryById(question.getUserId());
             System.out.println(user.getName());
             questions.setQuestion(question);
             questions.setUser(user);
+            questions.setFollowCount((int) followService.getFollowerCount(Constant.ENTITY_QUESTION,question.getId()));
             questionsLine.add(questions);
         }
 

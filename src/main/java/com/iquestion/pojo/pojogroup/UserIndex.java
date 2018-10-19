@@ -3,20 +3,13 @@ package com.iquestion.pojo.pojogroup;
 import com.iquestion.pojo.Question;
 import com.iquestion.pojo.User;
 
-public class Questions {
+public class UserIndex {
 
     private Question question;
-    private User user;
 
     private int followCount;
 
-    public int getFollowCount() {
-        return followCount;
-    }
-
-    public void setFollowCount(int followCount) {
-        this.followCount = followCount;
-    }
+    private User user;
 
     public Question getQuestion() {
         return question;
@@ -24,6 +17,14 @@ public class Questions {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public int getFollowCount() {
+        return followCount;
+    }
+
+    public void setFollowCount(int followCount) {
+        this.followCount = followCount;
     }
 
     public User getUser() {

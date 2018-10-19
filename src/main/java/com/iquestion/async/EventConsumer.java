@@ -1,7 +1,6 @@
 package com.iquestion.async;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.iquestion.common.Constant;
 import com.iquestion.utils.JedisAdapter;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +23,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
 
     //用来映射每个事件对应的 处理事件
-    private Map<EventType,List<EventHander>> config = new HashMap<>();
+    private Map<EventType,List<EventHandler>> config = new HashMap<>();
 
     //用来获取hander bean
     private ApplicationContext application ;
@@ -36,9 +34,9 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
     @Override
     public void afterPropertiesSet() throws Exception {
         //获取所有的hander事件
-        Map<String,EventHander> beans = application.getBeansOfType(EventHander.class);
+        Map<String,EventHandler> beans = application.getBeansOfType(EventHandler.class);
 
-        for(Map.Entry<String,EventHander> entry:beans.entrySet()){
+        for(Map.Entry<String,EventHandler> entry:beans.entrySet()){
 
             //获取每个事件处理器对应的 事件类型
             List<EventType> eventTypes = entry.getValue().getSupportEventTypes();
@@ -46,7 +44,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
             for (EventType eventType: eventTypes){
 
                 if (!config.containsKey(eventType)) {
-                    config.put(eventType,new ArrayList<EventHander>());
+                    config.put(eventType,new ArrayList<EventHandler>());
                 }
                 config.get(eventType).add(entry.getValue());
             }
@@ -76,7 +74,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
                             continue;
                         }
 
-                        for(EventHander hander : config.get(eventModel.getType())){
+                        for(EventHandler hander : config.get(eventModel.getType())){
 
                             hander.doHander(eventModel);
 

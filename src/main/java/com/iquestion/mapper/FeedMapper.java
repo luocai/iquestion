@@ -3,8 +3,11 @@ package com.iquestion.mapper;
 import com.iquestion.pojo.Feed;
 import com.iquestion.pojo.FeedExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface FeedMapper {
     long countByExample(FeedExample example);
 

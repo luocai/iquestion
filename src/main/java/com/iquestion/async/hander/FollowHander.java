@@ -1,6 +1,6 @@
 package com.iquestion.async.hander;
 
-import com.iquestion.async.EventHander;
+import com.iquestion.async.EventHandler;
 import com.iquestion.async.EventModel;
 import com.iquestion.async.EventType;
 import com.iquestion.common.Constant;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class FollowHander implements EventHander{
+public class FollowHander implements EventHandler {
 
     @Autowired
     MessageService messageService;

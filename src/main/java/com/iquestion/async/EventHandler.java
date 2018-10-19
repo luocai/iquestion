@@ -3,7 +3,7 @@ package com.iquestion.async;
 
 import java.util.List;
 
-public interface EventHander {
+public interface EventHandler {
 
     //具体的处理
     void doHander(EventModel eventModel);

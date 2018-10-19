@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)#signin -->
+<html lang="zh-CN" dropeffect="none" class="js is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile" style="" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::header"></head>
+<body class="zhi ">
+<div th:include="common::nav"></div>
+<link rel="stylesheet" href="../styles/result.css">
+<link rel="stylesheet" href="../styles/detail.css">
+<div class="zg-wrap zu-main clearfix" role="main">
+    <div class="zu-main-content">
+        <div class="zu-main-content-inner">
+            <ul class="list contents navigable">
+                <li class="item clearfix" th:each="questions : ${questionsList}">
+                    <div class="title">
+                        <a target="_blank" th:href="@{'/user/' + ${questions.user.id}}" class="js-title-link" th:text="${questions.question.title}"></a>
+                    </div>
+                    <div class="content">
+
+                        <ul class="answers">
+                            <li class="answer-item clearfix">
+                                <div class="entry answer">
+                                    <div class="entry-left hidden-phone">
+                                        <a class="zm-item-vote-count hidden-expanded js-expand js-vote-count" data-bind-votecount="" th:text="${questions.followCount}"></a>
+                                    </div>
+                                    <div class="entry-body">
+                                        <div class="entry-meta">
+                                            <strong class="author-line"><a class="author" th:href="${'/user/' + ${questions.user.id}}" th:text="${questions.user.name}"></a>，<span th:text="${#dates.format(questions.question.createdDate,'yyyy-MM-dd HH:mm:ss')}"></span></strong>
+                                        </div>
+                                        <div class="entry-content js-collapse-body">
+                                            <div class="summary hidden-expanded" style="" th:text="${questions.question.content}">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:include="common::js"></div>
+</body>
+</html>

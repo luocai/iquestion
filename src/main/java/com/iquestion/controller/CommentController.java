@@ -1,5 +1,8 @@
 package com.iquestion.controller;
 
+import com.iquestion.async.EventModel;
+import com.iquestion.async.EventProducer;
+import com.iquestion.async.EventType;
 import com.iquestion.common.Constant;
 import com.iquestion.common.Result;
 import com.iquestion.pojo.Comment;
@@ -30,6 +33,9 @@ public class CommentController {
     @Autowired
     private SensitiveService sensitiveService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
 
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
     public String addComment(@RequestParam("content") String content,
@@ -49,6 +55,13 @@ System.out.println("进来了评论区的一批哦");
                 comment.setUserId(HostHolder.getUser().getId());
             commentService.add(comment);
 
+            // 异步发送feed事件
+            EventModel eventModel = new EventModel();
+            eventModel.setActorId(comment.getUserId());
+            eventModel.setType(EventType.COMMENT);
+            eventModel.setEntityType(Constant.ENTITY_QUESTION);
+            eventModel.setEntityId(questionId);
+            eventProducer.fireEvent(eventModel);
 
         }catch (Exception e){
             logger.error("增加评论失败" + e.getMessage());
